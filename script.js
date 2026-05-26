@@ -12,41 +12,78 @@ const greetings = [
   "🧡🐏 May your home shine with the light of faith and joy this Eid!"
 ];
 
-const greetingElement = document.getElementById("greeting");
-// NOTE: IDs are swapped now! girl2 is on left (peace sign), girl1 is on right (waving)
-const girlLeft = document.getElementById("girl2");  // Peace sign (was pose1.1.png)
-const girlRight = document.getElementById("girl1"); // Waving (was pose1.png)
+// Desktop elements
+const greetingDesktop = document.getElementById("greeting");
+const girlLeft = document.getElementById("girlLeft");   // Peace sign (pose1.1.png)
+const girlRight = document.getElementById("girlRight"); // Waving (pose1.png)
+
+// Mobile elements
+const greetingMobile = document.getElementById("greetingMobile");
+const mobileGirlLeft = document.getElementById("mobileGirlLeft");
+const mobileGirlRight = document.getElementById("mobileGirlRight");
+
 const bgMusic = document.getElementById("bgMusic");
 const fireSound = document.getElementById("fireSound");
 
 let greetingIndex = 0;
 let musicStarted = false;
 
-// Function to update greeting text and switch poses (action styles)
+// Function to update BOTH desktop and mobile greetings and poses
 function updateGreetingAndPose() {
-  // Fade out text
-  greetingElement.style.opacity = "0";
+  // Fade out text on both versions
+  if (greetingDesktop) greetingDesktop.style.opacity = "0";
+  if (greetingMobile) greetingMobile.style.opacity = "0";
   
   setTimeout(() => {
-    greetingElement.innerText = greetings[greetingIndex];
-    greetingElement.style.opacity = "1";
+    const currentGreeting = greetings[greetingIndex];
+    if (greetingDesktop) greetingDesktop.innerText = currentGreeting;
+    if (greetingMobile) greetingMobile.innerText = currentGreeting;
+    
+    if (greetingDesktop) greetingDesktop.style.opacity = "1";
+    if (greetingMobile) greetingMobile.style.opacity = "1";
   }, 400);
   
-  // Alternate between poses:
-  // Even index: Left girl (peace sign) active, Right girl (waving) inactive
-  // Odd index: Left girl inactive, Right girl active
+  // Alternate between poses on BOTH desktop and mobile
   if (greetingIndex % 2 === 0) {
-    // Left girl active (peace sign)
-    girlLeft.style.opacity = "1";
-    girlLeft.style.transform = "scale(1)";
-    girlRight.style.opacity = "0";
-    girlRight.style.transform = "scale(0.7)";
+    // DESKTOP: Left girl active (peace sign)
+    if (girlLeft) {
+      girlLeft.style.opacity = "1";
+      girlLeft.style.transform = "scale(1)";
+    }
+    if (girlRight) {
+      girlRight.style.opacity = "0";
+      girlRight.style.transform = "scale(0.7)";
+    }
+    
+    // MOBILE: Left girl active (peace sign), Right girl inactive
+    if (mobileGirlLeft) {
+      mobileGirlLeft.style.opacity = "1";
+      mobileGirlLeft.style.transform = "scale(1)";
+    }
+    if (mobileGirlRight) {
+      mobileGirlRight.style.opacity = "0";
+      mobileGirlRight.style.transform = "scale(0.7)";
+    }
   } else {
-    // Right girl active (waving)
-    girlLeft.style.opacity = "0";
-    girlLeft.style.transform = "scale(0.7)";
-    girlRight.style.opacity = "1";
-    girlRight.style.transform = "scale(1)";
+    // DESKTOP: Right girl active (waving)
+    if (girlLeft) {
+      girlLeft.style.opacity = "0";
+      girlLeft.style.transform = "scale(0.7)";
+    }
+    if (girlRight) {
+      girlRight.style.opacity = "1";
+      girlRight.style.transform = "scale(1)";
+    }
+    
+    // MOBILE: Right girl active (waving), Left girl inactive
+    if (mobileGirlLeft) {
+      mobileGirlLeft.style.opacity = "0";
+      mobileGirlLeft.style.transform = "scale(0.7)";
+    }
+    if (mobileGirlRight) {
+      mobileGirlRight.style.opacity = "1";
+      mobileGirlRight.style.transform = "scale(1)";
+    }
   }
   
   greetingIndex++;
@@ -57,7 +94,6 @@ function updateGreetingAndPose() {
 
 // Function to trigger MEGA extra firework particles
 function burstExtraFireworks() {
-  // Create 20 random firework particles for massive festive feel
   for (let i = 0; i < 25; i++) {
     const spark = document.createElement("div");
     const xPos = Math.random() * window.innerWidth;
@@ -81,11 +117,10 @@ function burstExtraFireworks() {
     }, 1000);
   }
   
-  // Play firework sound if user interacted
   if (musicStarted) {
     fireSound.currentTime = 0;
     fireSound.volume = 0.35;
-    fireSound.play().catch(e => console.log("Audio play error:", e));
+    fireSound.play().catch(e => console.log("Audio error:", e));
   }
 }
 
@@ -104,47 +139,54 @@ document.head.appendChild(styleSheet);
 updateGreetingAndPose();
 let interval = setInterval(updateGreetingAndPose, 5000);
 
-// ========= FIREWORKS & MUSIC on USER CLICK (first interaction) =========
+// Start joyful experience on user click
 function startJoyfulExperience() {
   if (!musicStarted) {
     musicStarted = true;
-    // Play background music softly
     bgMusic.volume = 0.2;
-    bgMusic.play().catch(e => console.log("Music autoplay blocked, but user clicked"));
-    
-    // Trigger initial massive happy firework burst
+    bgMusic.play().catch(e => console.log("Music error:", e));
     burstExtraFireworks();
     
-    // Also trigger periodic mini fireworks every 3.5 seconds for extra joy
     setInterval(() => {
       if (musicStarted) {
         burstExtraFireworks();
       }
     }, 3500);
   } else {
-    // On each click, also burst extra fireworks
     burstExtraFireworks();
   }
 }
 
-// Detect first click anywhere on page to enable music & joyful fireworks
 document.body.addEventListener("click", startJoyfulExperience);
 document.addEventListener("touchstart", startJoyfulExperience);
 
-// Also burst fireworks on greeting change for more celebration
+// Periodic fireworks on greeting change
 setInterval(() => {
   if (musicStarted) {
     burstExtraFireworks();
   }
 }, 5500);
 
-// Ensure girls are initially set correctly (Left girl active first - peace sign)
-girlRight.style.opacity = "0";
-girlLeft.style.opacity = "1";
-girlLeft.style.transform = "scale(1)";
-girlRight.style.transform = "scale(0.7)";
+// Initial state: Peace sign active (left girl)
+if (girlRight) {
+  girlRight.style.opacity = "0";
+  girlRight.style.transform = "scale(0.7)";
+}
+if (girlLeft) {
+  girlLeft.style.opacity = "1";
+  girlLeft.style.transform = "scale(1)";
+}
 
-// Fallback for sheep image if needed
+if (mobileGirlRight) {
+  mobileGirlRight.style.opacity = "0";
+  mobileGirlRight.style.transform = "scale(0.7)";
+}
+if (mobileGirlLeft) {
+  mobileGirlLeft.style.opacity = "1";
+  mobileGirlLeft.style.transform = "scale(1)";
+}
+
+// Sheep image fallback
 window.addEventListener("load", () => {
   const sheep = document.getElementById("sheepImg");
   if (sheep && sheep.naturalWidth === 0) {
