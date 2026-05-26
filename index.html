@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Eid ul Adha Mubarak | Spectacular Fireworks</title>
+  <title>Eid ul Adha Mubarak | Joyous Celebration</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -19,26 +19,17 @@
     <source src="https://www.soundjay.com/misc/sounds/firework-burst-01.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Stars Background -->
+  <!-- Static Stars -->
   <div class="stars"></div>
 
-  <!-- SPECTACULAR BIG FIREWORKS -->
-  <div class="fireworks-show">
-    <div class="big-firework fw1"></div>
-    <div class="big-firework fw2"></div>
-    <div class="big-firework fw3"></div>
-    <div class="big-firework fw4"></div>
-    <div class="big-firework fw5"></div>
-    <div class="big-firework fw6"></div>
-    <div class="big-firework fw7"></div>
-    <div class="big-firework fw8"></div>
-    <div class="big-firework fw9"></div>
-    <div class="big-firework fw10"></div>
-    <div class="big-firework fw11"></div>
-    <div class="big-firework fw12"></div>
-    <div class="big-firework fw13"></div>
-    <div class="big-firework fw14"></div>
-    <div class="big-firework fw15"></div>
+  <!-- Optimized Fireworks (fewer but bigger) -->
+  <div class="fireworks-container">
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
   </div>
 
   <!-- Moon -->
@@ -47,10 +38,10 @@
   <!-- Main Section -->
   <section class="hero">
     
-    <!-- DESKTOP LAYOUT: Girls on left and right -->
+    <!-- DESKTOP LAYOUT -->
     <div class="desktop-layout">
-      <div class="girl-side left">
-        <img src="pose1.1.png" class="girl-img" id="girlLeft" alt="Hijabi Girl Peace Sign">
+      <div class="girl-side">
+        <img src="pose1.1.png" class="girl-img" id="girlLeft" alt="Peace Sign">
       </div>
       
       <div class="greeting-card">
@@ -58,41 +49,33 @@
         <div id="greetingText" class="greeting-message">
           May Allah fill your home with happiness and barakah ✨
         </div>
-        <div class="blessing-text">
-          Sending warm duas and blessings to you and your family 💖
-        </div>
+        <div class="blessing-text">Sending warm duas to you and your family 💖</div>
       </div>
       
-      <div class="girl-side right">
-        <img src="pose1.png" class="girl-img" id="girlRight" alt="Hijabi Girl Waving">
+      <div class="girl-side">
+        <img src="pose1.png" class="girl-img" id="girlRight" alt="Waving">
       </div>
     </div>
 
-    <!-- MOBILE LAYOUT: Girls below greeting card -->
+    <!-- MOBILE LAYOUT -->
     <div class="mobile-layout">
       <div class="greeting-card-mobile">
         <h1>🐏 Eid ul Adha Mubarak 🌙</h1>
         <div id="greetingTextMobile" class="greeting-message-mobile">
           May Allah fill your home with happiness and barakah ✨
         </div>
-        <div class="blessing-text-mobile">
-          Sending warm duas and blessings to you and your family 💖
-        </div>
+        <div class="blessing-text-mobile">Sending warm duas to you and your family 💖</div>
       </div>
       
-      <div class="mobile-girls-row">
-        <div class="mobile-girl">
-          <img src="pose1.1.png" id="mobileLeft" alt="Peace Sign">
-        </div>
-        <div class="mobile-girl">
-          <img src="pose1.png" id="mobileRight" alt="Waving">
-        </div>
+      <div class="mobile-girls">
+        <img src="pose1.1.png" id="mobileLeft" class="mobile-girl-img" alt="Peace Sign">
+        <img src="pose1.png" id="mobileRight" class="mobile-girl-img" alt="Waving">
       </div>
     </div>
     
     <!-- Sheep -->
     <div class="sheep-wrapper">
-      <img id="sheepImg" class="sheep-char" alt="Cute Eid Sheep" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='70' fill='%23FFF5E6' stroke='%23D4A373' stroke-width='3'/%3E%3Ccircle cx='70' cy='85' r='18' fill='%23E8D5B5'/%3E%3Ccircle cx='130' cy='85' r='18' fill='%23E8D5B5'/%3E%3Ccircle cx='75' cy='82' r='6' fill='%233D2B1A'/%3E%3Ccircle cx='125' cy='82' r='6' fill='%233D2B1A'/%3E%3Cpath d='M85 110 Q100 125 115 110' stroke='%238B5A2B' fill='none' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='80' y='140' width='40' height='30' rx='8' fill='%23C28B5E'/%3E%3Ccircle cx='85' cy='172' r='12' fill='%23A2704A'/%3E%3Ccircle cx='115' cy='172' r='12' fill='%23A2704A'/%3E%3Ctext x='45' y='45' font-size='35' fill='%23FFD966'%3E🐏%3C/text%3E%3C/svg%3E">
+      <img id="sheepImg" class="sheep" alt="Sheep" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='70' fill='%23FFF5E6' stroke='%23D4A373' stroke-width='3'/%3E%3Ccircle cx='70' cy='85' r='18' fill='%23E8D5B5'/%3E%3Ccircle cx='130' cy='85' r='18' fill='%23E8D5B5'/%3E%3Ccircle cx='75' cy='82' r='6' fill='%233D2B1A'/%3E%3Ccircle cx='125' cy='82' r='6' fill='%233D2B1A'/%3E%3Cpath d='M85 110 Q100 125 115 110' stroke='%238B5A2B' fill='none' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='80' y='140' width='40' height='30' rx='8' fill='%23C28B5E'/%3E%3Ccircle cx='85' cy='172' r='12' fill='%23A2704A'/%3E%3Ccircle cx='115' cy='172' r='12' fill='%23A2704A'/%3E%3Ctext x='45' y='45' font-size='35' fill='%23FFD966'%3E🐏%3C/text%3E%3C/svg%3E">
     </div>
   </section>
 
