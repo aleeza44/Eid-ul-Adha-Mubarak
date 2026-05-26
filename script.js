@@ -14,8 +14,8 @@ const greetings = [
 
 // Desktop elements
 const greetingDesktop = document.getElementById("greeting");
-const girlLeft = document.getElementById("girlLeft");   // Peace sign (pose1.1.png)
-const girlRight = document.getElementById("girlRight"); // Waving (pose1.png)
+const girlLeft = document.getElementById("girlLeft");
+const girlRight = document.getElementById("girlRight");
 
 // Mobile elements
 const greetingMobile = document.getElementById("greetingMobile");
@@ -27,62 +27,48 @@ const fireSound = document.getElementById("fireSound");
 
 let greetingIndex = 0;
 let musicStarted = false;
+let isTransitioning = false;
 
 // Function to update BOTH desktop and mobile greetings and poses
 function updateGreetingAndPose() {
-  // Fade out text on both versions
-  if (greetingDesktop) greetingDesktop.style.opacity = "0";
-  if (greetingMobile) greetingMobile.style.opacity = "0";
+  if (isTransitioning) return;
+  isTransitioning = true;
   
-  setTimeout(() => {
-    const currentGreeting = greetings[greetingIndex];
-    if (greetingDesktop) greetingDesktop.innerText = currentGreeting;
-    if (greetingMobile) greetingMobile.innerText = currentGreeting;
-    
-    if (greetingDesktop) greetingDesktop.style.opacity = "1";
-    if (greetingMobile) greetingMobile.style.opacity = "1";
-  }, 400);
+  const currentGreeting = greetings[greetingIndex];
   
-  // Alternate between poses on BOTH desktop and mobile
+  // Update text without fade on mobile to reduce glitching
+  if (greetingDesktop) {
+    greetingDesktop.style.opacity = "0";
+    setTimeout(() => {
+      greetingDesktop.innerText = currentGreeting;
+      greetingDesktop.style.opacity = "1";
+    }, 150);
+  }
+  
+  if (greetingMobile) {
+    greetingMobile.innerText = currentGreeting;
+  }
+  
+  // Alternate between poses
   if (greetingIndex % 2 === 0) {
-    // DESKTOP: Left girl active (peace sign)
+    // Left girl active (peace sign)
     if (girlLeft) {
       girlLeft.style.opacity = "1";
-      girlLeft.style.transform = "scale(1)";
-    }
-    if (girlRight) {
       girlRight.style.opacity = "0";
-      girlRight.style.transform = "scale(0.7)";
     }
-    
-    // MOBILE: Left girl active (peace sign), Right girl inactive
     if (mobileGirlLeft) {
       mobileGirlLeft.style.opacity = "1";
-      mobileGirlLeft.style.transform = "scale(1)";
-    }
-    if (mobileGirlRight) {
       mobileGirlRight.style.opacity = "0";
-      mobileGirlRight.style.transform = "scale(0.7)";
     }
   } else {
-    // DESKTOP: Right girl active (waving)
+    // Right girl active (waving)
     if (girlLeft) {
       girlLeft.style.opacity = "0";
-      girlLeft.style.transform = "scale(0.7)";
-    }
-    if (girlRight) {
       girlRight.style.opacity = "1";
-      girlRight.style.transform = "scale(1)";
     }
-    
-    // MOBILE: Right girl active (waving), Left girl inactive
     if (mobileGirlLeft) {
       mobileGirlLeft.style.opacity = "0";
-      mobileGirlLeft.style.transform = "scale(0.7)";
-    }
-    if (mobileGirlRight) {
       mobileGirlRight.style.opacity = "1";
-      mobileGirlRight.style.transform = "scale(1)";
     }
   }
   
@@ -90,101 +76,101 @@ function updateGreetingAndPose() {
   if (greetingIndex >= greetings.length) {
     greetingIndex = 0;
   }
+  
+  setTimeout(() => {
+    isTransitioning = false;
+  }, 200);
 }
 
-// Function to trigger MEGA extra firework particles
+// Function to trigger extra firework particles (reduced on mobile)
 function burstExtraFireworks() {
-  for (let i = 0; i < 25; i++) {
+  const isMobile = window.innerWidth <= 850;
+  const particleCount = isMobile ? 8 : 18;
+  
+  for (let i = 0; i < particleCount; i++) {
     const spark = document.createElement("div");
     const xPos = Math.random() * window.innerWidth;
-    const yPos = Math.random() * window.innerHeight * 0.7 + 30;
+    const yPos = Math.random() * window.innerHeight * 0.6 + 30;
     spark.style.position = "fixed";
     spark.style.left = xPos + "px";
     spark.style.top = yPos + "px";
-    spark.style.width = Math.random() * 12 + 6 + "px";
+    spark.style.width = (Math.random() * 8 + 4) + "px";
     spark.style.height = spark.style.width;
     spark.style.borderRadius = "50%";
     const colors = ["#ffeb3b", "#ff4081", "#00e5ff", "#ff9100", "#69f0ae", "#ea80fc", "#ffd740", "#ffffff"];
     spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    spark.style.boxShadow = "0 0 25px gold, 0 0 50px orange";
+    spark.style.boxShadow = "0 0 15px gold, 0 0 30px orange";
     spark.style.pointerEvents = "none";
     spark.style.zIndex = "999";
-    spark.style.animation = "popFirework 1s ease-out forwards";
+    spark.style.animation = "popFirework 0.8s ease-out forwards";
     document.body.appendChild(spark);
     
     setTimeout(() => {
-      spark.remove();
-    }, 1000);
+      if (spark && spark.remove) spark.remove();
+    }, 800);
   }
   
-  if (musicStarted) {
+  if (musicStarted && fireSound) {
     fireSound.currentTime = 0;
-    fireSound.volume = 0.35;
+    fireSound.volume = 0.25;
     fireSound.play().catch(e => console.log("Audio error:", e));
   }
 }
 
 // Add dynamic style for extra firework animation
-const styleSheet = document.createElement("style");
-styleSheet.textContent = `
-  @keyframes popFirework {
-    0% { transform: scale(0); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.9; }
-    100% { transform: scale(4); opacity: 0; }
-  }
-`;
-document.head.appendChild(styleSheet);
+if (!document.querySelector("#fireworkStyle")) {
+  const styleSheet = document.createElement("style");
+  styleSheet.id = "fireworkStyle";
+  styleSheet.textContent = `
+    @keyframes popFirework {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+}
 
 // Start auto-changing greetings and poses every 5 seconds
 updateGreetingAndPose();
 let interval = setInterval(updateGreetingAndPose, 5000);
 
-// Start joyful experience on user click
+// Start joyful experience on user click (only once)
 function startJoyfulExperience() {
   if (!musicStarted) {
     musicStarted = true;
-    bgMusic.volume = 0.2;
-    bgMusic.play().catch(e => console.log("Music error:", e));
+    if (bgMusic) {
+      bgMusic.volume = 0.15;
+      bgMusic.play().catch(e => console.log("Music error:", e));
+    }
     burstExtraFireworks();
     
-    setInterval(() => {
+    // Periodic fireworks (less frequent on mobile)
+    const fireworkInterval = setInterval(() => {
       if (musicStarted) {
         burstExtraFireworks();
       }
-    }, 3500);
+    }, window.innerWidth <= 850 ? 6000 : 4000);
   } else {
     burstExtraFireworks();
   }
 }
 
-document.body.addEventListener("click", startJoyfulExperience);
-document.addEventListener("touchstart", startJoyfulExperience);
+// Use passive event listeners for better scroll performance
+document.body.addEventListener("click", startJoyfulExperience, { passive: false });
+document.addEventListener("touchstart", startJoyfulExperience, { passive: false });
 
 // Periodic fireworks on greeting change
 setInterval(() => {
   if (musicStarted) {
     burstExtraFireworks();
   }
-}, 5500);
+}, 6000);
 
-// Initial state: Peace sign active (left girl)
-if (girlRight) {
-  girlRight.style.opacity = "0";
-  girlRight.style.transform = "scale(0.7)";
-}
-if (girlLeft) {
-  girlLeft.style.opacity = "1";
-  girlLeft.style.transform = "scale(1)";
-}
-
-if (mobileGirlRight) {
-  mobileGirlRight.style.opacity = "0";
-  mobileGirlRight.style.transform = "scale(0.7)";
-}
-if (mobileGirlLeft) {
-  mobileGirlLeft.style.opacity = "1";
-  mobileGirlLeft.style.transform = "scale(1)";
-}
+// Initial state: Left girl active (peace sign)
+if (girlRight) girlRight.style.opacity = "0";
+if (girlLeft) girlLeft.style.opacity = "1";
+if (mobileGirlRight) mobileGirlRight.style.opacity = "0";
+if (mobileGirlLeft) mobileGirlLeft.style.opacity = "1";
 
 // Sheep image fallback
 window.addEventListener("load", () => {
