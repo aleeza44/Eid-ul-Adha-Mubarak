@@ -2,33 +2,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(145deg, #1a0a2e 0%, #2d1b4e 40%, #0f0c29 100%);
+  background: linear-gradient(145deg, #1a0a2e 0%, #2d1b4e 50%, #0f0c29 100%);
   background-attachment: fixed;
-  position: relative;
   color: #fff2e0;
 }
 
-/* Stars */
+/* Static stars - no animation */
 .stars {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(white 2px, transparent 2px);
-  background-size: 80px 80px;
-  opacity: 0.6;
+  inset: 0;
+  background-image: radial-gradient(white 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Hero section */
+/* Hero */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -40,74 +35,61 @@ body {
   z-index: 10;
 }
 
-/* ========== DESKTOP LAYOUT ========== */
+/* ========== DESKTOP ========== */
 .desktop-layout {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 35px;
-  width: 100%;
-  max-width: 1400px;
+  gap: 30px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
-.girl-side {
-  flex-shrink: 0;
-}
-
 .girl-img {
-  width: 260px;
-  max-width: 28vw;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3));
-  border-radius: 40px;
-  transition: opacity 0.2s ease;
+  width: 240px;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  border-radius: 35px;
+  transition: opacity 0.15s linear;
 }
 
-/* Greeting Card */
 .greeting-card {
-  flex: 1;
-  max-width: 580px;
+  max-width: 550px;
   text-align: center;
-  padding: 45px 35px;
+  padding: 40px 30px;
   background: rgba(255, 245, 225, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 70px 45px 70px 45px;
+  border-radius: 65px 40px 65px 40px;
   border: 3px solid #ffdd99;
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(255, 170, 68, 0.5);
+  box-shadow: 0 25px 40px rgba(0,0,0,0.2);
 }
 
 .greeting-card h1 {
-  font-size: 2.8rem;
-  background: linear-gradient(135deg, #ffcc66, #ff9933, #ff6600);
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #ffcc66, #ff9933);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  margin-bottom: 22px;
-  font-weight: 800;
+  margin-bottom: 20px;
 }
 
 .greeting-message {
-  font-size: 1.45rem;
-  line-height: 2rem;
-  color: #8b3c0a;
+  font-size: 1.35rem;
+  line-height: 1.9rem;
+  color: #6b2e00;
   font-weight: 600;
-  min-height: 100px;
-  padding: 0 5px;
+  min-height: 95px;
 }
 
 .blessing-text {
-  margin-top: 22px;
+  margin-top: 20px;
   color: #a5521e;
   background: #fff0dd;
   display: inline-block;
-  padding: 8px 30px;
+  padding: 8px 25px;
   border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.9rem;
 }
 
-/* ========== MOBILE LAYOUT ========== */
+/* ========== MOBILE ========== */
 .mobile-layout {
   display: none;
   flex-direction: column;
@@ -117,272 +99,181 @@ body {
 
 .greeting-card-mobile {
   width: 100%;
-  max-width: 430px;
+  max-width: 400px;
   text-align: center;
-  padding: 30px 22px;
+  padding: 25px 18px;
   background: rgba(255, 245, 225, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 55px 35px 55px 35px;
+  border-radius: 50px 30px 50px 30px;
   border: 3px solid #ffdd99;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25), 0 0 0 5px rgba(255, 170, 68, 0.4);
-  margin-bottom: 28px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  margin-bottom: 25px;
 }
 
 .greeting-card-mobile h1 {
-  font-size: 1.9rem;
-  background: linear-gradient(135deg, #ffcc66, #ff9933, #ff6600);
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #ffcc66, #ff9933);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  margin-bottom: 15px;
-  font-weight: 800;
+  margin-bottom: 12px;
 }
 
 .greeting-message-mobile {
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: #8b3c0a;
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+  color: #6b2e00;
   font-weight: 600;
-  min-height: 75px;
+  min-height: 65px;
 }
 
 .blessing-text-mobile {
-  margin-top: 15px;
+  margin-top: 12px;
   color: #a5521e;
   background: #fff0dd;
   display: inline-block;
-  padding: 6px 22px;
+  padding: 5px 18px;
   border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.75rem;
 }
 
-.mobile-girls-row {
+.mobile-girls {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  gap: 28px;
+  gap: 25px;
   width: 100%;
-  margin: 10px 0;
 }
 
-.mobile-girl img {
-  width: 115px;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.25));
-  border-radius: 32px;
-  transition: opacity 0.2s ease;
+.mobile-girl-img {
+  width: 100px;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+  border-radius: 25px;
+  transition: opacity 0.15s linear;
 }
 
 /* Sheep */
 .sheep-wrapper {
-  margin-top: 45px;
+  margin-top: 35px;
   text-align: center;
 }
 
-.sheep-char {
-  width: 160px;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.25));
+.sheep {
+  width: 130px;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
   animation: gentleBob 2.2s ease-in-out infinite;
 }
 
 @keyframes gentleBob {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
-/* ========== RESPONSIVE ========== */
+/* Responsive */
 @media (max-width: 850px) {
-  .desktop-layout {
-    display: none;
-  }
-  .mobile-layout {
-    display: flex;
-  }
-  .sheep-char {
-    width: 130px;
-  }
+  .desktop-layout { display: none; }
+  .mobile-layout { display: flex; }
 }
 
 @media (max-width: 550px) {
-  .greeting-card-mobile {
-    padding: 22px 16px;
-  }
-  .greeting-card-mobile h1 {
-    font-size: 1.5rem;
-  }
-  .greeting-message-mobile {
-    font-size: 0.85rem;
-    line-height: 1.3rem;
-    min-height: 60px;
-  }
-  .mobile-girls-row {
-    gap: 20px;
-  }
-  .mobile-girl img {
-    width: 90px;
-  }
-  .sheep-char {
-    width: 105px;
-  }
+  .mobile-girl-img { width: 75px; }
+  .greeting-card-mobile h1 { font-size: 1.3rem; }
+  .sheep { width: 100px; }
 }
 
 @media (max-width: 380px) {
-  .mobile-girl img {
-    width: 75px;
-  }
-  .greeting-card-mobile h1 {
-    font-size: 1.3rem;
-  }
-  .sheep-char {
-    width: 90px;
-  }
+  .mobile-girl-img { width: 65px; }
+  .mobile-girls { gap: 15px; }
 }
 
-/* ========== MOON ========== */
+/* Moon */
 .moon {
   position: fixed;
-  top: 35px;
-  right: 35px;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle at 30% 30%, #fff9d0, #ffe8a0);
+  top: 25px;
+  right: 25px;
+  width: 75px;
+  height: 75px;
+  background: radial-gradient(circle, #fff9d0, #ffe8a0);
   border-radius: 50%;
-  box-shadow: 0 0 45px #ffdd88, 0 0 80px rgba(255, 200, 100, 0.6);
+  box-shadow: 0 0 30px #ffdd88;
   z-index: 3;
   pointer-events: none;
-  animation: moonGlow 4s ease-in-out infinite;
-}
-
-@keyframes moonGlow {
-  0%, 100% { box-shadow: 0 0 45px #ffdd88, 0 0 80px rgba(255, 200, 100, 0.6); }
-  50% { box-shadow: 0 0 60px #ffeaa7, 0 0 100px rgba(255, 220, 120, 0.8); }
 }
 
 .moon::after {
   content: "🌙";
   position: absolute;
-  font-size: 60px;
-  top: 12px;
-  left: 20px;
-  opacity: 0.4;
-  color: #ffd58c;
+  font-size: 45px;
+  top: 8px;
+  left: 15px;
+  opacity: 0.35;
 }
 
 @media (max-width: 600px) {
-  .moon {
-    width: 65px;
-    height: 65px;
-    top: 18px;
-    right: 18px;
-  }
-  .moon::after {
-    font-size: 40px;
-    top: 7px;
-    left: 13px;
-  }
+  .moon { width: 50px; height: 50px; top: 15px; right: 15px; }
+  .moon::after { font-size: 30px; top: 5px; left: 10px; }
 }
 
-/* ========== SPECTACULAR BIG FIREWORKS ========== */
-.fireworks-show {
+/* ========== BIG BUT SMOOTH FIREWORKS ========== */
+.fireworks-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 2;
 }
 
-.big-firework {
+.firework {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: radial-gradient(circle, #ffffff, #ffdd44);
-  animation: massiveExplosion 3.2s infinite ease-out;
+  background: radial-gradient(circle, #fff, #ffdd44);
+  animation: explode 3s infinite ease-out;
 }
 
-/* Massive explosion burst with many colors */
-.big-firework::before {
+.firework::before {
   content: "";
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   box-shadow: 
-    120px 0 #ff3366,
-    -120px 0 #33ff66,
-    0 120px #ffcc00,
-    0 -120px #ff6600,
-    85px 85px #ff44cc,
-    -85px -85px #44ffcc,
-    85px -85px #ffaa44,
-    -85px 85px #66ff33,
-    150px 50px #ff8844,
-    -150px 50px #44ffaa,
-    50px 150px #ff5599,
-    -50px -150px #55ff99,
-    120px -80px #ffdd33,
-    -120px -80px #33ffdd,
-    80px 120px #ff3377,
-    -80px 120px #77ff33;
+    80px 0 #ff3366,
+    -80px 0 #33ff66,
+    0 80px #ffcc00,
+    0 -80px #ff6600,
+    55px 55px #ff44cc,
+    -55px -55px #44ffcc,
+    55px -55px #ffaa44,
+    -55px 55px #66ff33;
 }
 
 /* Firework positions */
-.fw1 { top: 12%; left: 8%; animation-delay: 0s; }
-.fw2 { top: 18%; left: 88%; animation-delay: 0.7s; }
-.fw3 { top: 35%; left: 22%; animation-delay: 1.4s; }
-.fw4 { top: 50%; right: 10%; animation-delay: 0.3s; }
-.fw5 { top: 68%; left: 45%; animation-delay: 2.1s; }
-.fw6 { top: 25%; left: 55%; animation-delay: 1.1s; }
-.fw7 { top: 78%; left: 78%; animation-delay: 0.9s; }
-.fw8 { top: 42%; left: 68%; animation-delay: 1.8s; }
-.fw9 { top: 88%; left: 20%; animation-delay: 2.5s; }
-.fw10 { top: 55%; left: 12%; animation-delay: 0.5s; }
-.fw11 { top: 8%; left: 35%; animation-delay: 3s; }
-.fw12 { top: 62%; left: 82%; animation-delay: 1.3s; }
-.fw13 { top: 32%; left: 78%; animation-delay: 2.2s; }
-.fw14 { top: 82%; left: 55%; animation-delay: 0.8s; }
-.fw15 { top: 48%; left: 42%; animation-delay: 1.9s; }
+.firework:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+.firework:nth-child(2) { top: 20%; left: 85%; animation-delay: 0.8s; }
+.firework:nth-child(3) { top: 45%; left: 25%; animation-delay: 1.5s; }
+.firework:nth-child(4) { top: 60%; right: 12%; animation-delay: 0.4s; }
+.firework:nth-child(5) { top: 75%; left: 50%; animation-delay: 2s; }
+.firework:nth-child(6) { top: 35%; left: 60%; animation-delay: 1.2s; }
 
-@keyframes massiveExplosion {
-  0% {
-    transform: scale(0.1);
-    opacity: 1;
-  }
-  25% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(2.5);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(4.5);
-    opacity: 0;
-  }
+@keyframes explode {
+  0% { transform: scale(0.1); opacity: 1; }
+  30% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
 }
 
-/* Slightly reduce on mobile for performance but keep awesome */
+/* Mobile: slightly smaller but still awesome */
 @media (max-width: 750px) {
-  .big-firework::before {
+  .firework::before {
     box-shadow: 
-      70px 0 #ff3366,
-      -70px 0 #33ff66,
-      0 70px #ffcc00,
-      0 -70px #ff6600,
-      50px 50px #ff44cc,
-      -50px -50px #44ffcc,
-      50px -50px #ffaa44,
-      -50px 50px #66ff33,
-      90px 30px #ff8844,
-      -90px 30px #44ffaa,
-      30px 90px #ff5599,
-      -30px -90px #55ff99;
+      50px 0 #ff3366,
+      -50px 0 #33ff66,
+      0 50px #ffcc00,
+      0 -50px #ff6600,
+      35px 35px #ff44cc,
+      -35px -35px #44ffcc,
+      35px -35px #ffaa44,
+      -35px 35px #66ff33;
   }
-  .big-firework {
+  .firework {
     animation-duration: 3.5s;
   }
 }
