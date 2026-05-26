@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -12,10 +13,11 @@ body {
   background-attachment: fixed;
   position: relative;
   color: #2e241f;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ========================= */
-/* STARS */
+/* STARS - Optimized */
 /* ========================= */
 .stars {
   position: fixed;
@@ -30,6 +32,7 @@ body {
   opacity: 0.9;
   pointer-events: none;
   z-index: 0;
+  will-change: opacity;
 }
 
 @keyframes twinkle {
@@ -52,7 +55,7 @@ body {
 }
 
 /* ========================= */
-/* DESKTOP LAYOUT (default) */
+/* DESKTOP LAYOUT */
 /* ========================= */
 .desktop-layout {
   display: flex;
@@ -74,13 +77,13 @@ body {
 
 .girl-img {
   width: 260px;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.3s ease;
   animation: floatGirl 3.5s infinite ease-in-out;
   filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.25));
   border-radius: 40px;
+  will-change: transform;
 }
 
-/* Content Box (Greeting Card) - Desktop */
 .content-box {
   flex: 1;
   min-width: 300px;
@@ -92,12 +95,7 @@ body {
   border-radius: 80px 50px 80px 50px;
   border: 4px solid #ffd966;
   box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), 0 0 0 8px #ffb347;
-  transition: transform 0.3s ease;
   z-index: 20;
-}
-
-.content-box:hover {
-  transform: scale(1.02);
 }
 
 .content-box h1 {
@@ -116,7 +114,7 @@ body {
   min-height: 110px;
   color: #a7581c;
   font-weight: 600;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .content-box p {
@@ -131,7 +129,7 @@ body {
 }
 
 /* ========================= */
-/* MOBILE LAYOUT (hidden on desktop) */
+/* MOBILE LAYOUT - Optimized */
 /* ========================= */
 .mobile-layout {
   display: none;
@@ -171,7 +169,7 @@ body {
   min-height: 80px;
   color: #a7581c;
   font-weight: 600;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .content-box-mobile p {
@@ -192,8 +190,7 @@ body {
   align-items: center;
   gap: 25px;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .mobile-girl-container {
@@ -207,7 +204,8 @@ body {
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
   animation: floatGirl 3.5s infinite ease-in-out;
   border-radius: 35px;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.3s ease;
+  will-change: transform;
 }
 
 /* ========================= */
@@ -229,10 +227,10 @@ body {
 .sheep-char {
   width: 180px;
   display: block;
-  transition: transform 0.2s;
+  will-change: transform;
 }
 
-/* Animations */
+/* Animations - Hardware accelerated */
 @keyframes floatGirl {
   0% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-15px) rotate(1deg); }
@@ -246,15 +244,13 @@ body {
 }
 
 /* ========================= */
-/* RESPONSIVE: MOBILE BREAKPOINT (≤850px) */
+/* RESPONSIVE: MOBILE */
 /* ========================= */
 @media (max-width: 850px) {
-  /* Hide desktop layout */
   .desktop-layout {
     display: none;
   }
   
-  /* Show mobile layout */
   .mobile-layout {
     display: flex;
   }
@@ -382,7 +378,7 @@ body {
 }
 
 /* ========================= */
-/* CLOUDS */
+/* CLOUDS - Optimized */
 /* ========================= */
 .cloud {
   position: fixed;
@@ -391,6 +387,7 @@ body {
   filter: blur(30px);
   z-index: 1;
   pointer-events: none;
+  will-change: transform;
 }
 
 .cloud1 {
@@ -423,7 +420,7 @@ body {
 }
 
 /* ========================= */
-/* MEGA BIG FIREWORKS */
+/* FIREWORKS - Optimized for performance */
 /* ========================= */
 .firework {
   position: absolute;
@@ -434,6 +431,7 @@ body {
   animation: megaBoom 2.8s infinite ease-out;
   pointer-events: none;
   z-index: 2;
+  will-change: transform, opacity;
 }
 
 .firework::before {
@@ -569,5 +567,17 @@ body {
   100% {
     transform: scale(2.8);
     opacity: 0;
+  }
+}
+
+/* Reduce fireworks on mobile for better performance */
+@media (max-width: 850px) {
+  .firework,
+  .fireworks::before,
+  .fireworks::after,
+  .fireworks2::before,
+  .fireworks2::after {
+    animation-duration: 3.5s;
+    transform: scale(0.8);
   }
 }
