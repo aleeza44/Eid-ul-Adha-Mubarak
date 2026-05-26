@@ -1,5 +1,5 @@
-// Joyous Eid ul Adha greetings
-const eidGreetings = [
+// Eid greetings
+const greetings = [
   "✨ Eid ul Adha Mubarak! May Allah accept your sacrifices and bless your family.",
   "🐏 May your Eid be filled with peace, happiness, and endless barakah.",
   "💖 Sending warm duas and beautiful wishes to you this Eid ul Adha.",
@@ -7,14 +7,12 @@ const eidGreetings = [
   "🐑 Eid Mubarak! May your heart stay filled with gratitude and kindness.",
   "🌸 Wishing you smiles, laughter, and unforgettable Eid memories.",
   "🕊️ May all your prayers be accepted and your dreams come true.",
-  "🎉🐪 Taqabbal Allahu minna wa minkum! Eid Mubarak to you and your loved ones!",
-  "🌟 May the spirit of sacrifice bring you closer to Allah and your family.",
-  "🧡🐏 May your home shine with the light of faith and joy this Eid!"
+  "🎉🐪 Taqabbal Allahu minna wa minkum! Eid Mubarak!"
 ];
 
-// DOM Elements
-const desktopGreeting = document.getElementById("greetingText");
-const mobileGreeting = document.getElementById("greetingTextMobile");
+// Elements
+const desktopText = document.getElementById("greetingText");
+const mobileText = document.getElementById("greetingTextMobile");
 const girlLeft = document.getElementById("girlLeft");
 const girlRight = document.getElementById("girlRight");
 const mobileLeft = document.getElementById("mobileLeft");
@@ -22,122 +20,101 @@ const mobileRight = document.getElementById("mobileRight");
 const bgMusic = document.getElementById("bgMusic");
 const fireSound = document.getElementById("fireSound");
 
-let currentIndex = 0;
-let musicStarted = false;
-let rotationInterval;
+let index = 0;
+let musicOn = false;
+let intervalId;
 
 // Update greeting and swap poses
-function updateGreetingAndPose() {
-  const newMessage = eidGreetings[currentIndex];
+function updateContent() {
+  const msg = greetings[index];
+  if (desktopText) desktopText.innerText = msg;
+  if (mobileText) mobileText.innerText = msg;
   
-  if (desktopGreeting) desktopGreeting.textContent = newMessage;
-  if (mobileGreeting) mobileGreeting.textContent = newMessage;
-  
-  const showLeft = (currentIndex % 2 === 0);
+  const showLeft = (index % 2 === 0);
   
   if (girlLeft && girlRight) {
     girlLeft.style.opacity = showLeft ? "1" : "0";
     girlRight.style.opacity = showLeft ? "0" : "1";
   }
-  
   if (mobileLeft && mobileRight) {
     mobileLeft.style.opacity = showLeft ? "1" : "0";
     mobileRight.style.opacity = showLeft ? "0" : "1";
   }
   
-  currentIndex++;
-  if (currentIndex >= eidGreetings.length) currentIndex = 0;
+  index++;
+  if (index >= greetings.length) index = 0;
 }
 
-// Massive firework burst (bigger and more spectacular)
-function burstMassiveFireworks() {
+// Single firework burst (lightweight)
+function popFirework() {
   const isMobile = window.innerWidth <= 750;
-  const particleCount = isMobile ? 18 : 35;
+  const count = isMobile ? 6 : 12;
   
-  for (let i = 0; i < particleCount; i++) {
-    const spark = document.createElement("div");
-    const xPos = Math.random() * window.innerWidth;
-    const yPos = Math.random() * window.innerHeight * 0.7 + 20;
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement("div");
+    particle.style.position = "fixed";
+    particle.style.left = Math.random() * window.innerWidth + "px";
+    particle.style.top = Math.random() * window.innerHeight * 0.6 + 20 + "px";
+    particle.style.width = (Math.random() * 10 + 5) + "px";
+    particle.style.height = particle.style.width;
+    particle.style.borderRadius = "50%";
     
-    spark.style.position = "fixed";
-    spark.style.left = xPos + "px";
-    spark.style.top = yPos + "px";
-    spark.style.width = (Math.random() * 14 + 6) + "px";
-    spark.style.height = spark.style.width;
-    spark.style.borderRadius = "50%";
+    const colors = ["#ff3366", "#ffcc00", "#33ff66", "#ff6600", "#ff44cc", "#44ffcc"];
+    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.boxShadow = "0 0 15px gold";
+    particle.style.pointerEvents = "none";
+    particle.style.zIndex = "9999";
+    particle.style.animation = "popAnim 0.7s ease-out forwards";
+    document.body.appendChild(particle);
     
-    const colors = ["#ff3366", "#ffcc00", "#33ff66", "#ff6600", "#ff44cc", "#44ffcc", "#ffaa44", "#ffffff", "#ff5599", "#55ff99"];
-    spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    spark.style.boxShadow = "0 0 25px gold, 0 0 45px orange";
-    spark.style.pointerEvents = "none";
-    spark.style.zIndex = "9999";
-    spark.style.animation = "bigPop 0.9s ease-out forwards";
-    document.body.appendChild(spark);
-    
-    setTimeout(() => {
-      if (spark && spark.remove) spark.remove();
-    }, 900);
+    setTimeout(() => particle.remove(), 700);
   }
   
-  // Play sound
-  if (musicStarted && fireSound) {
+  if (musicOn && fireSound) {
     fireSound.currentTime = 0;
-    fireSound.volume = 0.3;
-    fireSound.play().catch(e => console.log("Sound error:", e));
+    fireSound.volume = 0.25;
+    fireSound.play().catch(() => {});
   }
 }
 
-// Add animation keyframes
-if (!document.querySelector("#bigPopKeyframes")) {
-  const style = document.createElement("style");
-  style.id = "bigPopKeyframes";
-  style.textContent = `
-    @keyframes bigPop {
-      0% { transform: scale(0); opacity: 1; }
-      40% { transform: scale(1.8); opacity: 1; }
-      100% { transform: scale(4); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
+// Add pop animation
+if (!document.querySelector("#popKey")) {
+  const s = document.createElement("style");
+  s.id = "popKey";
+  s.textContent = `@keyframes popAnim { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }`;
+  document.head.appendChild(s);
 }
 
-// Start automatic greeting rotation
+// Start rotation
 function startRotation() {
-  if (rotationInterval) clearInterval(rotationInterval);
-  updateGreetingAndPose();
-  rotationInterval = setInterval(updateGreetingAndPose, 5000);
+  if (intervalId) clearInterval(intervalId);
+  updateContent();
+  intervalId = setInterval(updateContent, 5000);
 }
 
-// Enable music and fireworks on user interaction
-function enableFestiveMode() {
-  if (!musicStarted) {
-    musicStarted = true;
-    
+// Enable on user interaction
+function enableMusic() {
+  if (!musicOn) {
+    musicOn = true;
     if (bgMusic) {
-      bgMusic.volume = 0.15;
-      bgMusic.play().catch(e => console.log("Music error:", e));
+      bgMusic.volume = 0.12;
+      bgMusic.play().catch(() => {});
     }
-    
-    // Initial massive burst
-    burstMassiveFireworks();
-    
-    // Periodic massive fireworks every 4 seconds
-    setInterval(() => {
-      if (musicStarted) burstMassiveFireworks();
-    }, 4000);
+    popFirework();
+    setInterval(() => { if (musicOn) popFirework(); }, 4500);
   } else {
-    burstMassiveFireworks();
+    popFirework();
   }
 }
 
-// Event listeners
-document.body.addEventListener("click", enableFestiveMode);
-document.body.addEventListener("touchstart", enableFestiveMode);
+// Events
+document.body.addEventListener("click", enableMusic);
+document.body.addEventListener("touchstart", enableMusic);
 
 // Initialize
 startRotation();
 
-// Set initial pose (left girl active)
+// Set initial pose
 if (girlLeft && girlRight) {
   girlLeft.style.opacity = "1";
   girlRight.style.opacity = "0";
